@@ -3,7 +3,7 @@ from tcp_server import TcpServer
 
 
 def callback_accept(client, addr):
-    print(addr)
+    print(type(addr))
     for i in range(10):
         client.send(b"test")
         time.sleep(1)
