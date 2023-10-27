@@ -16,3 +16,5 @@ class GameSession:
 
         return self.players[addr]
 
+    def remove(self, addr):
+        pass

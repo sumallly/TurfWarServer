@@ -28,4 +28,7 @@ class Test:
         assert(player_num_D == 1)
 
         gs.remove(addr_A)
-        
+        addr_E = ("192.168.0.5", 5000)
+        sess_id_E, player_num_E = gs.inquiry(addr_E)
+        assert(sess_id_E == 0)
+        assert(player_num_E == 0)
