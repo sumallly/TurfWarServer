@@ -1,26 +1,35 @@
 class GameSession:
     def __init__(self) -> None:
-        self.players = {}
+        self.sess_id = {}
+        self.player_num = {}
 
     def __init_player(self):
-        registerd_player_num = len(self.players)
+        registerd_player_num = len(self.sess_id)
 
         id = int(registerd_player_num // 2)
         num = int(registerd_player_num % 2)
 
+        id_values = list(self.sess_id.values())
+        if id_values.count(id) == 2:
+            id = max(id_values) + 1
+
         return id, num
 
     def register(self, addr):
-        if addr in self.players:
-            raise ValueError("This address is already registerd.")
+        if addr in self.sess_id:
+            raise ValueError(f"This address({addr}) is already registerd.")
 
-        self.players[addr] = self.__init_player()
+        self.sess_id[addr], self.player_num[addr] = self.__init_player()
 
     def inquiry(self, addr):
-        if addr not in self.players:
-            raise ValueError("This address is not registerd")
+        if addr not in self.sess_id:
+            raise ValueError(f"This address({addr}) is not registerd")
 
-        return self.players[addr]
+        return self.sess_id[addr], self.player_num[addr]
 
-    def remove(self, addr):
-        self.players.pop(addr)
+    def remove_from_id(self, id):
+        addrs = [k for k, v in self.sess_id.items() if v == id]
+
+        for addr in addrs:
+            self.sess_id.pop(addr)
+

@@ -32,12 +32,17 @@ class Test:
         assert(sess_id_D == 1)
         assert(player_num_D == 1)
 
-        gs.remove(addr_A)
+        gs.remove_from_id(sess_id_A)
         with pytest.raises(ValueError) as e:
             gs.inquiry(addr_A)
-        assert(str(e.value) == "This address is not registerd")
+        assert(str(e.value) == f"This address({addr_A}) is not registerd")
 
-        gs.register(addr_A)
-        sess_id_A, player_num_A = gs.inquiry(addr_A)
-        assert(sess_id_A == 0)
-        assert(player_num_A == 0)
+        with pytest.raises(ValueError) as e:
+            gs.inquiry(addr_B)
+        assert(str(e.value) == f"This address({addr_B}) is not registerd")
+
+        addr_E = ("192.168.0.5", 5000)
+        gs.register(addr_E)
+        sess_id_E, player_num_E = gs.inquiry(addr_E)
+        assert(sess_id_E == 2)
+        assert(player_num_E == 0)
