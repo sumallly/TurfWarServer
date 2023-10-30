@@ -1,6 +1,7 @@
 import pytest
 from game_session import GameSession
 from turfwar_game import TurfWarGame
+from field_map import FieldMap
 
 class Test:
     def testGameSession(self):
@@ -52,3 +53,7 @@ class Test:
         game = TurfWarGame()
         field_map = game.get_map()
         assert(field_map == "")
+
+    def testFieldMap(self):
+        fm = FieldMap()
+        field_map = fm.get_flatten_map()
