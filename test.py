@@ -1,5 +1,6 @@
 import pytest
 from game_session import GameSession
+from turfwar_game import TurfWarGame
 
 class Test:
     def testGameSession(self):
@@ -46,3 +47,8 @@ class Test:
         sess_id_E, player_num_E = gs.inquiry(addr_E)
         assert(sess_id_E == 2)
         assert(player_num_E == 0)
+
+    def testTurfWarGame(self):
+        game = TurfWarGame()
+        field_map = game.get_map()
+        assert(field_map == "")
