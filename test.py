@@ -56,4 +56,10 @@ class Test:
 
     def testFieldMap(self):
         fm = FieldMap()
-        field_map = fm.get_flatten_map()
+        field_map_2d = fm.get_2d_map()
+        field_map_flatten = fm.get_flatten_map()
+        
+        assert(field_map_2d.shape == (20, 30))
+        assert(len(field_map_flatten) == 20 * 30)
+
+        fm.paint_at(5, 10, "*")
