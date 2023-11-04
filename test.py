@@ -55,11 +55,21 @@ class Test:
         assert(field_map == "")
 
     def testFieldMap(self):
-        fm = FieldMap()
+        fm = FieldMap.create_flatmap()
         field_map_2d = fm.get_2d_map()
         field_map_flatten = fm.get_flatten_map()
-        
-        assert(field_map_2d.shape == (20, 30))
-        assert(len(field_map_flatten) == 20 * 30)
 
-        fm.paint_at(5, 10, "*")
+        assert(field_map_2d.shape == (6, 6))
+        assert(len(field_map_flatten) == 6 * 6)
+
+        fm.paint_at(4, 4, "a")
+        updated_map_2d = fm.get_2d_map()
+        assert(updated_map_2d[4][4] == "a")
+
+        with pytest.raises(ValueError) as e:
+            fm.paint_at(0, 0, "a")
+        assert(str(e.value) == "There is obstacle block at (0, 0).")
+
+        with pytest.raises(ValueError) as e:
+            fm.paint_at(6, 3, "a")
+        assert(str(e.value) == "This point is unavailable.")
