@@ -1,6 +1,11 @@
+from field_map import FieldMap
+
 class TurfWarGame:
     def __init__(self) -> None:
-        pass
+        self.fm = FieldMap.create_flatmap()
 
     def get_map(self):
-        return ""
+        return self.fm.get_flatten_map()
+
+    def step(self):
+        pass
