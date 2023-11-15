@@ -5,7 +5,7 @@ class TurfWarGame:
         self.fm = FieldMap.create_flatmap()
 
     def get_map(self):
-        return self.fm.get_flatten_map()
+        return self.fm.get_flat_map()
 
     def step(self):
         pass
