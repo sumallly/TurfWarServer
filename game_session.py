@@ -20,6 +20,11 @@ class GameSession:
             raise ValueError(f"This address({addr}) is already registerd.")
 
         self.sess_id[addr], self.player_num[addr] = self.__init_player()
+        
+    def get_join_num(self, id):
+        ids = list(self.sess_id.values())
+        num = ids.count(id)
+        return num
 
     def inquiry(self, addr):
         if addr not in self.sess_id:

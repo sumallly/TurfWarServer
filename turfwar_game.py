@@ -7,5 +7,5 @@ class TurfWarGame:
     def get_map(self):
         return self.fm.get_flat_map()
 
-    def step(self):
+    def step(self, response):
         pass

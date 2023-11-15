@@ -1,5 +1,3 @@
-import numpy as np
-
 class FieldMap:
     field_width = 30
     field_height = 20
