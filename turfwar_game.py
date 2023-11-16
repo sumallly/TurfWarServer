@@ -7,5 +7,5 @@ class TurfWarGame:
     def get_map(self):
         return self.fm.get_map_sendable()
 
-    def step(self, response):
+    def step(self, p_id, response):
         pass
