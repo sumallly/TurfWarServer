@@ -2,10 +2,10 @@ from field_map import FieldMap
 
 class TurfWarGame:
     def __init__(self) -> None:
-        self.fm = FieldMap.create_flatmap()
+        self.fm = FieldMap()
 
     def get_map(self):
-        return self.fm.get_flat_map()
+        return self.fm.get_map_sendable()
 
     def step(self, response):
         pass

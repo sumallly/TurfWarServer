@@ -34,7 +34,7 @@ def callback_accept(client, addr):
         client.close()
         
 
-def main():
+def main():    
     tcp_server = TcpServer("127.0.0.1", 8000)
     tcp_server.register_callback(callback_accept)
 
@@ -44,9 +44,6 @@ def main():
         except KeyboardInterrupt:
             print("Shutdown server ...")
             break
-        except BrokenPipeError:
-            print("Broke pipe")
-            pass
 
 
 if __name__ == "__main__":
