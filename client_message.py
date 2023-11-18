@@ -1,6 +1,6 @@
 class ClientMessage:
     def __init__(self, message: str) -> None:
-        split = message.split(",")
+        split = message.decode().split(",")
 
         self.behavior = split[0]
 

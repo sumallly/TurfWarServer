@@ -19,3 +19,7 @@ class ServerResponse:
 
     def set_turn(self, flag):
         self.your_turn = flag
+
+    def get_response(self):
+        response = self.map + "," + self.behavior + "," + str(self.your_turn)
+        return response.encode()
