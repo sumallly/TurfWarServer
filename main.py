@@ -31,6 +31,7 @@ def callback_accept(client, addr):
             # Client -> Server
             client_res_msg =  client.recv(256)
             game.step(player_num, client_res_msg)
+            print(f"Client(id={session_id}, p={player_num}) -> Server")
 
             game.wait_other_player()
 
@@ -51,6 +52,7 @@ def main():
             print("Shutdown server ...")
             break
 
+    print("end")
 
 if __name__ == "__main__":
     main()

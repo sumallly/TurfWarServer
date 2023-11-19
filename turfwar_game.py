@@ -30,8 +30,7 @@ class TurfWarGame:
 
         msg = ClientMessage(message)
 
-        map = self.get_map()
-        # updated_map = map.paint()
+        # map udpate
 
     def wait_other_player(self):
         while self.num_of_res != 2:
