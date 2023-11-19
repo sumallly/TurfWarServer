@@ -15,18 +15,24 @@ def callback_accept(client, addr):
     if gs.get_join_num(session_id) == 1:
         games.append(TurfWarGame())
 
+    game: TurfWarGame = games[session_id]
+
+    gs.wait_for_opponents(session_id)
+
+    print(f"Start game(id={session_id}, p={player_num})")
+
     try:
         while True:
-            if gs.get_join_num(session_id) != 2:
-                continue
+            # Server -> Client
+            server_res_msg = game.get_response(player_num)
+            client.send(server_res_msg)
+            print(f"Server -> Client(id={session_id}, p={player_num})")
 
-            field_map = games[session_id].get_map()
+            # Client -> Server
+            client_res_msg =  client.recv(256)
+            game.step(player_num, client_res_msg)
 
-            client.send(field_map.encode())
-            responce =  client.recv(256).decode()
-
-            games[session_id].step(responce)
-
+            game.wait_other_player()
 
     except BrokenPipeError:
         print(f"close id({session_id})")

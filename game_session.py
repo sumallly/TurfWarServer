@@ -20,7 +20,7 @@ class GameSession:
             raise ValueError(f"This address({addr}) is already registerd.")
 
         self.sess_id[addr], self.player_num[addr] = self.__init_player()
-        
+
     def get_join_num(self, id):
         ids = list(self.sess_id.values())
         num = ids.count(id)
@@ -37,4 +37,8 @@ class GameSession:
 
         for addr in addrs:
             self.sess_id.pop(addr)
+
+    def wait_for_opponents(self, id):
+        while self.get_join_num(id) != 2:
+            pass
 
