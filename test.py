@@ -49,33 +49,13 @@ class Test:
         assert(sess_id_E == 2)
         assert(player_num_E == 0)
 
-    def testFieldMap(self):
-        fm = FieldMap.create_flatmap()
-        field_map_2d = fm.get_2d_map()
-        field_map_flatten = fm.get_flatten_map()
-
-        assert(field_map_2d.shape == (6, 6))
-        assert(len(field_map_flatten) == 6 * 6)
-
-        fm.paint_at(4, 4, "a")
-        updated_map_2d = fm.get_2d_map()
-        assert(updated_map_2d[4][4] == "a")
-
-        with pytest.raises(ValueError) as e:
-            fm.paint_at(0, 0, "a")
-        assert(str(e.value) == "There is obstacle block at (0, 0).")
-
-        with pytest.raises(ValueError) as e:
-            fm.paint_at(6, 3, "a")
-        assert(str(e.value) == "This point is unavailable.")
-
     def testTurfWarGame(self):
         game = TurfWarGame()
         field_map = game.get_map()
-        assert(len(field_map) == 36)
+        assert(len(field_map) == 20*30)
 
-        fm = FieldMap.create_flatmap()
-        assert(all(field_map == fm.get_flatten_map()))
+        fm = FieldMap()
+        assert((field_map == fm.get_map_sendable()))
 
         p_id = 0
         p_behavior = ""

@@ -1,13 +1,44 @@
 import time
 from tcp_server import TcpServer
+from game_session import GameSession
+from turfwar_game import TurfWarGame
+from field_map import FieldMap
 
+gs = GameSession()
+games = []
 
 def callback_accept(client, addr):
-    print(type(addr))
-    for i in range(10):
-        client.send(b"test")
-        time.sleep(1)
-    client.close()
+    print(addr)
+    gs.register(addr)
+    session_id, player_num = gs.inquiry(addr)
+
+    if gs.get_join_num(session_id) == 1:
+        games.append(TurfWarGame())
+
+    game: TurfWarGame = games[session_id]
+
+    gs.wait_for_opponents(session_id)
+
+    print(f"Start game(id={session_id}, p={player_num})")
+
+    try:
+        while True:
+            # Server -> Client
+            server_res_msg = game.get_response(player_num)
+            client.send(server_res_msg)
+            print(f"Server -> Client(id={session_id}, p={player_num})")
+
+            # Client -> Server
+            client_res_msg =  client.recv(256)
+            game.step(player_num, client_res_msg)
+            print(f"Client(id={session_id}, p={player_num}) -> Server")
+
+            game.wait_other_player()
+
+    except BrokenPipeError:
+        print(f"close id({session_id})")
+        gs.remove_from_id(session_id)
+        client.close()
 
 
 def main():
@@ -20,10 +51,8 @@ def main():
         except KeyboardInterrupt:
             print("Shutdown server ...")
             break
-        except BrokenPipeError:
-            print("Broke pipe")
-            pass
 
+    print("end")
 
 if __name__ == "__main__":
     main()
