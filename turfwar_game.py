@@ -8,19 +8,13 @@ class TurfWarGame:
         self.fm: FieldMap = FieldMap()
         self.fm.add_player("0", "o")
         self.fm.add_player("1", "x")
-        
+
         self.which_turn = 0
 
         self.responses = [ServerResponse(), ServerResponse()]
 
         self.num_of_res = 0
         self.turn = 2
-    
-    def next_step(self):
-        self.turn += 1
-    
-    def wait_process(self):
-        time.sleep(0.1)
 
     def get_map(self):
         return self.fm.get_map_sendable()
@@ -48,4 +42,7 @@ class TurfWarGame:
     def wait_other_player(self):
         while self.num_of_res != self.turn:
             pass
-        
+
+        time.sleep(0.2)
+        self.turn += 1
+
