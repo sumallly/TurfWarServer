@@ -30,19 +30,30 @@ class FieldMap:
                 elif unit == 2:
                     fieldstr += '?'
                 elif unit > 10:
-                    # process by player
                     fieldstr += self.symbol[unit]
                 else:
                     fieldstr += ' '
         return fieldstr
     
-    def add_player(self, ID:str, mark:str) -> None:
+    def add_player(self, ID:str, symbol:str) -> None:
         self.d[ID] = self.userNum + 11
         self.position[self.d[ID]] = [randint(1, 19), randint(1, 29)]
             # [y, x] make func init position
-        self.symbol[self.d[ID]] = "f" + self.userNum
-            # make func generate random symbol by user
+        self.symbol[self.d[ID]] = symbol
+        self.__paint_by_position(ID, self.position[self.d[ID]], 0)
         self.userNum += 1
+    
+    def get_user_position(self, ID:str) -> list:
+        return self.position[self.d[ID]]    # [y, x]
+    
+    def overwrite_user_position(self, ID:str, position:list) -> None:
+        self.position[self.d[ID]] = position
+    
+    def get_user_symbol(self, ID:str) -> str:
+        return self.symbol[self.d[ID]]
+    
+    def overwrite_user_symbol(self, ID:str, symbol:str) -> None:
+        self.symbol[self.d[ID]] = symbol
     
     def get_can_be_painted_direction(self, ID:str):
         return self.__can_be_painted(self.position[self.d[ID]])
@@ -55,15 +66,15 @@ class FieldMap:
                 self.field[y][x+1] != self.d["obstacle"],
                 self.field[y+1][x] != self.d["obstacle"]]
     
-    def paint_by_direction(self, ID:str, direction:str, item:int) -> int:
+    def paint_by_direction(self, ID:str, direction:str, item:int=0) -> int:
         pos = self.position[self.d[ID]]
         if direction == "w":
             pos[0] -= 1
         elif direction == "a":
             pos[1] -= 1
-        elif direction == "s":
-            pos[1] += 1
         elif direction == "d":
+            pos[1] += 1
+        elif direction == "s":
             pos[0] += 1
         else:
             # invalid direction charactor
