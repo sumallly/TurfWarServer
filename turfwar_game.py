@@ -1,6 +1,7 @@
 from field_map import FieldMap
 from client_message import ClientMessage
 from server_response import ServerResponse
+import time
 
 class TurfWarGame:
     def __init__(self) -> None:
@@ -10,6 +11,13 @@ class TurfWarGame:
         self.responses = [ServerResponse(), ServerResponse()]
 
         self.num_of_res = 0
+        self.turn = 2
+    
+    def next_step(self):
+        self.turn += 1
+    
+    def wait_process(self):
+        time.sleep(0.1)
 
     def get_map(self):
         return self.fm.get_map_sendable()
@@ -33,5 +41,6 @@ class TurfWarGame:
         # map udpate
 
     def wait_other_player(self):
-        while self.num_of_res != 2:
+        while self.num_of_res != self.turn:
             pass
+        
