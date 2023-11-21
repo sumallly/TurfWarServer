@@ -40,7 +40,7 @@ class FieldMap:
         self.d[ID] = self.userNum + 11
         self.position[self.d[ID]] = [randint(1, 19), randint(1, 29)]
             # [y, x] make func init position
-        self.symbol[self.d[ID]] = "f" + self.userNum
+        self.symbol[self.d[ID]] = mark
             # make func generate random symbol by user
         self.userNum += 1
     
