@@ -23,6 +23,7 @@ tcp_client.connect((target_ip,target_port))
 while True:
     response = tcp_client.recv(buffer_size).decode()
     res_msgs = response.split(",")
+    print(res_msgs)
     display_map(res_msgs[0])
 
     print("input=")
