@@ -23,7 +23,6 @@ def callback_accept(client, addr):
 
     try:
         while True:
-            
             # Server -> Client
             server_res_msg = game.get_response(player_num)
             client.send(server_res_msg)
