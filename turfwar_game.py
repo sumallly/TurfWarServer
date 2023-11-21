@@ -46,3 +46,5 @@ class TurfWarGame:
         time.sleep(0.2)
         self.turn += 1
 
+    def record_log(self):
+        pass
