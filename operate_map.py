@@ -22,7 +22,13 @@ class OperateField:
 
         if fieldtype:
             if fieldtype == self.fieldtype_dict["circular"]:
-                pass
+                yL = len(self.field)
+                xL = len(self.field[0])
+                for y in range(yL):
+                    for x in range(xL):
+                        if ((x-xL/2+0.5)/xL)**2 + ((y-yL/2+0.5)/yL)**2 > 0.2:
+                            self.field[y][x] = 1
+
             if fieldtype == self.fieldtype_dict["grid"]:
                 for i, row in enumerate(self.field):
                     if i%2 == 0:
@@ -40,7 +46,6 @@ class OperateField:
         pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
         while self.field[pos[0]][pos[1]]:
             pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
-    
         return pos
 	
     def can_be_painted(self, position:list) -> list:
