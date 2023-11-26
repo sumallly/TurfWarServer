@@ -4,10 +4,10 @@ class FieldMap:
     # empty 0, obstacle 1, item 2, player 11-
 
     @classmethod
-    def get_field_type(cls) -> list:
+    def get_field_type(cls) -> dict:
         return OperateField.get_field_type()
 
-    def __init__(self, fieldtype = None, fieldsize = {'x':30, 'y':20}) -> None:
+    def __init__(self, fieldtype = None, fieldsize = {'x':31, 'y':21}) -> None:
         self.position = {}
         self.symbols = {}
         self.userNum = 0
@@ -36,6 +36,7 @@ class FieldMap:
                     fieldstr += self.symbols[unit]
                 else:
                     fieldstr += ' '
+                fieldstr += ' '
         return fieldstr
     
     def get_field_size(self) -> dict:
@@ -80,11 +81,11 @@ class FieldMap:
 
 
 if __name__ == "__main__":
-    fm = FieldMap(fieldsize={'x':50, 'y':10})
+    print(FieldMap.get_field_type())
+    fm = FieldMap(fieldtype=2, fieldsize={'x':51, 'y':11})
     fm.add_player("0", "o")
     fm.add_player("1", "x")
-
     s = fm.get_map_sendable()
     fieldsize = fm.get_field_size()
     for i in range(fieldsize["y"]):
-        print(s[i*fieldsize["x"] : (i+1)*fieldsize["x"]])
+        print(s[2*i*fieldsize["x"] : 2*(i+1)*fieldsize["x"]])
