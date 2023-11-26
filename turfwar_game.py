@@ -2,6 +2,7 @@ from field_map import FieldMap
 from client_message import ClientMessage
 from server_response import ServerResponse
 import time
+from items import VerticalPaintItem
 
 class TurfWarGame:
     def __init__(self) -> None:
@@ -15,6 +16,8 @@ class TurfWarGame:
 
         self.num_of_res = 0
         self.turn = 2
+
+        self.player_have_item = [0, 0]
 
     def get_map(self):
         return self.fm.get_map_sendable()
@@ -37,7 +40,18 @@ class TurfWarGame:
         msg = ClientMessage(message)
 
         move_dir = msg.get_behavior()
-        self.fm.paint_by_direction(str(p_id), move_dir, 0)
+        use_item = msg.get_use_item_flag()
+
+        status = self.fm.paint_by_direction(str(p_id), move_dir, 0)
+
+        if use_item and self.player_have_item[p_id]:
+            # use item
+            self.fm.paint_by_item(str(id), VerticalPaintItem())
+            self.player_have_item[p_id] = 0
+
+        if status == 1:
+            # get item
+            self.player_have_item[p_id] = 1
 
     def wait_other_player(self):
         while self.num_of_res != self.turn:
