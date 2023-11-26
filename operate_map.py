@@ -29,15 +29,15 @@ class OperateField:
                         if ((x-xL/2+0.5)/xL)**2 + ((y-yL/2+0.5)/yL)**2 > 0.2:
                             self.field[y][x] = 1
 
-            if fieldtype == self.fieldtype_dict["grid"]:
+            elif fieldtype == self.fieldtype_dict["grid"]:
                 for i, row in enumerate(self.field):
                     if i%2 == 0:
                         for i in range(int(len(row)/2)):
                             row[i*2] = 1
-            if fieldtype == self.fieldtype_dict["complicated"]:
+            elif fieldtype == self.fieldtype_dict["complicated"]:
                 pass
-            # generate field process by fieldtype
-            pass
+            else:
+                pass
 
     def get_init_position(self, angle = None) -> list:
         if angle is None:
@@ -48,6 +48,12 @@ class OperateField:
             pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
         return pos
 	
+    def place_item(self) -> None:
+        pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
+        while self.field[pos[0]][pos[1]] == 1:
+            pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
+        self.field[pos[0]][pos[1]] = 2
+
     def can_be_painted(self, position:list) -> list:
         y = position[0]
         x = position[1]

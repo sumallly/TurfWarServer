@@ -79,12 +79,17 @@ class FieldMap:
             pass
         return self.operator.paint_by_position(self.d[ID], pos, item)
 
+    def place_item(self) -> None:
+        self.operator.place_item()
+
 
 if __name__ == "__main__":
     print(FieldMap.get_field_type())
-    fm = FieldMap(fieldtype=2, fieldsize={'x':51, 'y':11})
+    sel = int(input())
+    fm = FieldMap(fieldtype=sel, fieldsize={'x':31, 'y':21})
     fm.add_player("0", "o")
     fm.add_player("1", "x")
+    fm.operator.place_item()
     s = fm.get_map_sendable()
     fieldsize = fm.get_field_size()
     for i in range(fieldsize["y"]):
