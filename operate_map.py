@@ -4,9 +4,10 @@ import random
 
 
 class OperateField:
+    fieldtype_dict = {"flat":0, "circular":1, "grid":2, "complicated":3}
     @classmethod
     def get_field_type(cls):
-        return ["flat", "circular", "grid", "complicated"]
+        return cls.fieldtype_dict
 
     def __init__(self, fieldtype, fieldsize) -> None:
         self.field = [[0 for j in range(fieldsize['x'])] for i in range(fieldsize['y'])]
@@ -20,6 +21,15 @@ class OperateField:
             row[0] = row[fieldsize['x'] - 1] = 1
 
         if fieldtype:
+            if fieldtype == self.fieldtype_dict["circular"]:
+                pass
+            if fieldtype == self.fieldtype_dict["grid"]:
+                for i, row in enumerate(self.field):
+                    if i%2 == 0:
+                        for i in range(int(len(row)/2)):
+                            row[i*2] = 1
+            if fieldtype == self.fieldtype_dict["complicated"]:
+                pass
             # generate field process by fieldtype
             pass
 
@@ -27,7 +37,11 @@ class OperateField:
         if angle is None:
             angle = random.uniform(0.0, 2*pi)
 		# Farthest point by angle from center
-        return [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
+        pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
+        while self.field[pos[0]][pos[1]]:
+            pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
+    
+        return pos
 	
     def can_be_painted(self, position:list) -> list:
         y = position[0]
