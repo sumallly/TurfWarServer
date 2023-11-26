@@ -1,5 +1,3 @@
-from cmath import pi
-from random import randint
 from operate_map import OperateField
 
 class FieldMap:
@@ -14,8 +12,8 @@ class FieldMap:
         self.symbols = {}
         self.userNum = 0
         
-        if worldtype is None:
-            worldtype = 0
+        if fieldtype is None:
+            fieldtype = 0
         
         self.operator = OperateField(fieldtype, fieldsize)
         self.d = self.operator.d
@@ -40,6 +38,9 @@ class FieldMap:
                     fieldstr += ' '
         return fieldstr
     
+    def get_field_size(self) -> dict:
+        return self.operator.fieldsize
+
     def add_player(self, ID:str, symbol:str) -> None:
         self.d[ID] = self.userNum + 11
         self.position[self.d[ID]] = self.operator.get_init_position()
@@ -76,3 +77,14 @@ class FieldMap:
             # invalid direction charactor
             pass
         return self.operator.paint_by_position(self.d[ID], pos, item)
+
+
+if __name__ == "__main__":
+    fm = FieldMap(fieldsize={'x':50, 'y':10})
+    fm.add_player("0", "o")
+    fm.add_player("1", "x")
+
+    s = fm.get_map_sendable()
+    fieldsize = fm.get_field_size()
+    for i in range(fieldsize["y"]):
+        print(s[i*fieldsize["x"] : (i+1)*fieldsize["x"]])
