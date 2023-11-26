@@ -34,8 +34,6 @@ def callback_accept(client, addr):
             print(f"Client(id={session_id}, p={player_num}) -> Server")
 
             game.wait_other_player()
-            game.wait_process()
-            game.next_step()
 
     except BrokenPipeError:
         print(f"close id({session_id})")

@@ -3,10 +3,9 @@ class ClientMessage:
         split = message.decode().split(",")
 
         self.behavior = split[0]
-        self.use_item = split[1]
-        self.timestamp = split[2]
 
     def get_behavior(self):
+        print(self.behavior)
         return self.behavior
 
     def get_use_item_flag(self):
