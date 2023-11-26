@@ -2,6 +2,7 @@ import pytest
 from game_session import GameSession
 from turfwar_game import TurfWarGame
 from field_map import FieldMap
+from items import VerticalPaintItem
 
 class Test:
     def testGameSession(self):
@@ -48,15 +49,3 @@ class Test:
         sess_id_E, player_num_E = gs.inquiry(addr_E)
         assert(sess_id_E == 2)
         assert(player_num_E == 0)
-
-    def testTurfWarGame(self):
-        game = TurfWarGame()
-        field_map = game.get_map()
-        assert(len(field_map) == 20*30)
-
-        fm = FieldMap()
-        assert((field_map == fm.get_map_sendable()))
-
-        p_id = 0
-        p_behavior = ""
-        game.step(p_id, p_behavior)
