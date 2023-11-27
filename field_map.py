@@ -56,6 +56,9 @@ class FieldMap:
     
     def overwrite_user_symbol(self, ID:str, symbol:str) -> None:
         self.symbols[self.d[ID]] = symbol
+
+    def get_field_size(self):
+        return self.operator.fieldsize
     
     def get_can_be_painted_direction(self, ID:str):
         return self.operator.can_be_painted(self.position[self.d[ID]])
@@ -92,7 +95,9 @@ class FieldMap:
 if __name__ == "__main__":
     print(FieldMap.get_field_type())
     sel = int(input())
-    fm = FieldMap(fieldtype=sel, fieldsize={'x':31, 'y':21})
+    print("fieldsize : x, y")
+    size = list(map(int, input().split(",")))
+    fm = FieldMap(fieldtype=sel, fieldsize={'x':size[0], 'y':size[1]})
     fm.add_player("0", "o")
     fm.add_player("1", "x")
     fm.operator.place_item()
