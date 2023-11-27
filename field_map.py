@@ -24,9 +24,6 @@ class FieldMap:
         return self.operator.field
 
     def get_map_sendable(self) -> str:
-        return self.operator.get_map_sendable(self.symbols)
-
-    def get_map_sendable(self) -> str:
         fieldstr = ""
         for row in self.operator.field:
             for unit in row:
