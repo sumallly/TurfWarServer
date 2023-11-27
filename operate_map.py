@@ -1,6 +1,7 @@
 from cmath import pi
 from random import randint
 import random
+import copy
 
 
 class OperateField:
@@ -48,16 +49,19 @@ class OperateField:
         for i in range(int(self.fieldsize["x"]*self.fieldsize["y"] / 6.0)):
             pos = self.__get_random_pos(0)
             self.field[pos[0]][pos[1]] = 1
+        # add obstacle to isolated area
 
     def __get_random_pos(self, objtype_place):
         if type(objtype_place) == int:
             objtype_place = [objtype_place]
-
         pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
         while not self.field[pos[0]][pos[1]] in objtype_place:
             pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
-
         return pos
+
+    def __check_isolated_area(self):
+        checkfield = copy.deepcopy(self.field)
+        # mapping numbers for each isolated area by scanning field
 
     def get_init_position(self, angle = None) -> list:
         if angle is None:
