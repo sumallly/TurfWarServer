@@ -28,6 +28,7 @@ class OperateField:
                 self.__add_obstacle_grid()
             elif fieldtype == self.fieldtype_dict["complicated"]:
                 self.__add_obstacle_complicated()
+                self.__fill_isolated_area()
             else:
                 pass
     
@@ -59,9 +60,30 @@ class OperateField:
             pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
         return pos
 
-    def __check_isolated_area(self):
+    def __fill_isolated_area(self):
         checkfield = copy.deepcopy(self.field)
         # mapping numbers for each isolated area by scanning field
+        thereisblank = True
+        checknum = -1
+        while thereisblank:
+            for i in range(len(checkfield)):
+                for j in range(len(row)):
+                    if checkfield[i][j] == 0:
+                        checkfield[i][j] = checknum
+                        checknum -= 1
+                        break
+                else:
+                    continue
+                break
+                
+
+            for row in checkfield:
+                if 0 in row:
+                    checkfield = True
+                    break
+                else:
+                    checkfield = False    
+                    
 
     def get_init_position(self, angle = None) -> list:
         if angle is None:
