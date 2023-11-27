@@ -22,31 +22,48 @@ class OperateField:
 
         if fieldtype:
             if fieldtype == self.fieldtype_dict["circular"]:
-                yL = len(self.field)
-                xL = len(self.field[0])
-                for y in range(yL):
-                    for x in range(xL):
-                        if ((x-xL/2+0.5)/xL)**2 + ((y-yL/2+0.5)/yL)**2 > 0.2:
-                            self.field[y][x] = 1
-
+                self.__add_obstacle_circular()
             elif fieldtype == self.fieldtype_dict["grid"]:
-                for i, row in enumerate(self.field):
-                    if i%2 == 0:
-                        for i in range(int(len(row)/2)):
-                            row[i*2] = 1
+                self.__add_obstacle_grid()
             elif fieldtype == self.fieldtype_dict["complicated"]:
-                pass
+                self.__add_obstacle_complicated()
             else:
                 pass
+    
+    def __add_obstacle_circular(self):
+        yL = len(self.field)
+        xL = len(self.field[0])
+        for y in range(yL):
+            for x in range(xL):
+                if ((x-xL/2+0.5)/xL)**2 + ((y-yL/2+0.5)/yL)**2 > 0.2:
+                    self.field[y][x] = 1
+    
+    def __add_obstacle_grid(self):
+        for i, row in enumerate(self.field):
+            if i%2 == 0:
+                for i in range(int(len(row)/2)):
+                    row[i*2] = 1
+
+    def __add_obstacle_complicated(self):
+        for i in range(int(self.fieldsize["x"]*self.fieldsize["y"] / 6.0)):
+            pos = self.__get_random_pos(0)
+            self.field[pos[0]][pos[1]] = 1
+
+    def __get_random_pos(self, objtype_place):
+        if type(objtype_place) == int:
+            objtype_place = [objtype_place]
+
+        pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
+        while not self.field[pos[0]][pos[1]] in objtype_place:
+            pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
+
+        return pos
 
     def get_init_position(self, angle = None) -> list:
         if angle is None:
             angle = random.uniform(0.0, 2*pi)
 		# Farthest point by angle from center
-        pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
-        while self.field[pos[0]][pos[1]]:
-            pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
-        return pos
+        return self.__get_random_pos(0)
 	
     def place_item(self) -> None:
         pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
