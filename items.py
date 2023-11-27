@@ -18,7 +18,7 @@ class HorizontalPaintItem(ItemTemplate):
     def __init__(self) -> None:
         super().__init__()
 
-        super().paint_area = [ \
+        self.paint_area = [ \
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
             [1, 1, 1, 1, 1],
@@ -26,5 +26,5 @@ class HorizontalPaintItem(ItemTemplate):
             [0, 0, 0, 0, 0]
         ]
 
-        super().item_no = 2
+        self.item_no = 2
 
