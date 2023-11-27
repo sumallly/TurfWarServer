@@ -2,11 +2,11 @@ from field_map import FieldMap
 from client_message import ClientMessage
 from server_response import ServerResponse
 import time
-from items import VerticalPaintItem
+from item_template import ItemTemplate
 
 class TurfWarGame:
     def __init__(self) -> None:
-        self.fm: FieldMap = FieldMap()
+        self.fm: FieldMap = FieldMap(3)
         self.fm.add_player("0", "o")
         self.fm.add_player("1", "x")
 
@@ -44,9 +44,11 @@ class TurfWarGame:
 
         status = self.fm.paint_by_direction(str(p_id), move_dir, 0)
 
-        if use_item and self.player_have_item[p_id]:
+        # if use_item and self.player_have_item[p_id]:
+        if use_item:
             # use item
-            self.fm.paint_by_item(str(id), VerticalPaintItem())
+            item = ItemTemplate.create_random_item()
+            self.fm.paint_by_item(str(p_id), item)
             self.player_have_item[p_id] = 0
 
         if status == 1:

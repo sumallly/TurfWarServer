@@ -1,6 +1,6 @@
 from random import randint
-from items import ItemTemplate
 from operate_map import OperateField
+from items import VerticalPaintItem, ItemTemplate
 
 class FieldMap:
     # empty 0, obstacle 1, item 2, player 11-
@@ -13,10 +13,10 @@ class FieldMap:
         self.position = {}
         self.symbols = {}
         self.userNum = 0
-        
+
         if fieldtype is None:
             fieldtype = 0
-        
+
         self.operator = OperateField(fieldtype, fieldsize)
         self.d = self.operator.d
 
@@ -44,22 +44,22 @@ class FieldMap:
         self.symbols[self.d[ID]] = mark
         self.operator.paint_by_position(self.d[ID], self.position[self.d[ID]], 0)
         self.userNum += 1
-    
+
     def get_user_position(self, ID:str) -> list:
         return self.position[self.d[ID]]    # [y, x]
-    
+
     def overwrite_user_position(self, ID:str, position:list) -> None:
         self.position[self.d[ID]] = position
-    
+
     def get_user_symbol(self, ID:str) -> str:
         return self.symbols[self.d[ID]]
-    
+
     def overwrite_user_symbol(self, ID:str, symbol:str) -> None:
         self.symbols[self.d[ID]] = symbol
-    
+
     def get_can_be_painted_direction(self, ID:str):
         return self.operator.can_be_painted(self.position[self.d[ID]])
-    
+
     def paint_by_direction(self, ID:str, direction:str, item:int=0) -> int:
         pos = self.position[self.d[ID]]
         if direction == "w":
@@ -87,7 +87,7 @@ class FieldMap:
             for j, flag in enumerate(row):
                 if flag == 0:
                     continue
-                self.operator.paint_by_position(ID, (i, j), 0)
+                self.operator.paint_by_position(self.d[ID], (i, j), 0)
 
 if __name__ == "__main__":
     print(FieldMap.get_field_type())
@@ -96,6 +96,9 @@ if __name__ == "__main__":
     fm.add_player("0", "o")
     fm.add_player("1", "x")
     fm.operator.place_item()
+
+    fm.paint_by_item("0", VerticalPaintItem())
+
     s = fm.get_map_sendable()
     fieldsize = fm.get_field_size()
     for i in range(fieldsize["y"]):
