@@ -3,6 +3,7 @@ from game_session import GameSession
 from turfwar_game import TurfWarGame
 from field_map import FieldMap
 from items import VerticalPaintItem
+from item_template import ItemTemplate
 
 class Test:
     def testGameSession(self):
@@ -49,3 +50,13 @@ class Test:
         sess_id_E, player_num_E = gs.inquiry(addr_E)
         assert(sess_id_E == 2)
         assert(player_num_E == 0)
+
+    
+    def testItemTemplate(self):
+        item = ItemTemplate.create_random_item()
+        mask = item.get_mask((2, 2))
+        print()
+        for i in mask:
+            for j in i:
+                print(j, end="")
+            print()

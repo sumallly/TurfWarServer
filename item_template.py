@@ -1,4 +1,6 @@
 import numpy as np
+import random
+import items
 
 class ItemTemplate:
     def __init__(self) -> None:
@@ -18,3 +20,20 @@ class ItemTemplate:
 
         return mask.tolist()
 
+    @classmethod
+    def create_random_item(cls):
+        random_value = random.random()
+        
+        probabilities = [0.5, 0.5]
+        item_types = [ items.HorizontalPaintItem(), items.VerticalPaintItem() ]
+        
+        item: ItemTemplate = ItemTemplate()
+        
+        temp = 0
+        for i, probability in enumerate(probabilities):
+            temp += probability
+            if random_value < temp:
+                item = item_types[i]
+                break
+        
+        return item
