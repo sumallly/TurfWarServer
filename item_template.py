@@ -1,4 +1,3 @@
-import numpy as np
 import random
 import items
 
@@ -10,7 +9,8 @@ class ItemTemplate:
     def get_mask(self, position):
         player_x = position[1]
         player_y = position[0]
-        mask = np.zeros((21, 31), dtype=np.uint8)
+        # mask = np.zeros((21, 31), dtype=np.uint8)
+        mask = [[0 for j in range(31)] for i in range(21)]
 
         for i, row in enumerate(self.paint_area):
             for j, flag in enumerate(row):
@@ -18,7 +18,7 @@ class ItemTemplate:
                     continue
                 mask[i + player_y - 2][j + player_x - 2] = 1
 
-        return mask.tolist()
+        return mask
 
     @classmethod
     def create_random_item(cls):
