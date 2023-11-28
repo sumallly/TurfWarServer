@@ -1,4 +1,3 @@
-import numpy as np
 import random
 import items
 
@@ -10,7 +9,8 @@ class ItemTemplate:
     def get_mask(self, position):
         player_x = position[1]
         player_y = position[0]
-        mask = np.zeros((20, 30), dtype=np.uint8)
+        # mask = np.zeros((21, 31), dtype=np.uint8)
+        mask = [[0 for j in range(31)] for i in range(21)]
 
         for i, row in enumerate(self.paint_area):
             for j, flag in enumerate(row):
@@ -18,22 +18,25 @@ class ItemTemplate:
                     continue
                 mask[i + player_y - 2][j + player_x - 2] = 1
 
-        return mask.tolist()
+        return mask
 
     @classmethod
     def create_random_item(cls):
         random_value = random.random()
-        
-        probabilities = [0.5, 0.5]
-        item_types = [ items.HorizontalPaintItem(), items.VerticalPaintItem() ]
-        
+
+        probabilities = [0.4, 0.35, 0.1, 0.1, 0.05]
+        item_types = [ items.HorizontalPaintItem(), items.VerticalPaintItem(), 
+                       items.DiagonalCrossPaintItem(), items.CrossPaintItem(),
+                       items.SaikyoPaintItem()
+                       ]
+
         item: ItemTemplate = ItemTemplate()
-        
+
         temp = 0
         for i, probability in enumerate(probabilities):
             temp += probability
             if random_value < temp:
                 item = item_types[i]
                 break
-        
+
         return item

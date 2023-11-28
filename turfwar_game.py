@@ -2,13 +2,17 @@ from field_map import FieldMap
 from client_message import ClientMessage
 from server_response import ServerResponse
 import time
-from items import VerticalPaintItem
+from item_template import ItemTemplate
 
 class TurfWarGame:
     def __init__(self) -> None:
-        self.fm: FieldMap = FieldMap()
+        self.fm: FieldMap = FieldMap(3)
         self.fm.add_player("0", "o")
         self.fm.add_player("1", "x")
+        
+        init_item_num = 10
+        for i in range(init_item_num):
+            self.fm.place_item()
 
         self.which_turn = 0
 
@@ -25,12 +29,13 @@ class TurfWarGame:
     def get_response(self, id):
         res = self.responses[id]
 
-        can_behavior = self.fm.get_can_be_painted_direction(str(id))
-        res.set_behavior(*can_behavior)
+        can_behaviors = []
+        for can in self.fm.get_can_be_painted_direction(str(id)):
+            can_behaviors.append(int(can))
+        
+        res.set_behavior(*can_behaviors)
         res.set_fieldmap(self.get_map())
-
-        this_p_turn_is = int(self.which_turn == id)
-        res.set_turn(this_p_turn_is)
+        res.set_having_item(self.player_have_item[id])
 
         return res.get_response()
 
@@ -45,8 +50,10 @@ class TurfWarGame:
         status = self.fm.paint_by_direction(str(p_id), move_dir, 0)
 
         if use_item and self.player_have_item[p_id]:
+        # if use_item:
             # use item
-            self.fm.paint_by_item(str(id), VerticalPaintItem())
+            item = ItemTemplate.create_random_item()
+            self.fm.paint_by_item(str(p_id), item)
             self.player_have_item[p_id] = 0
 
         if status == 1:
