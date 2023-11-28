@@ -1,4 +1,7 @@
 # 陣取りゲーム
+
+https://github.com/kaga1minn0nnn4/TurfWarServer/assets/35623953/b8d6f6f1-9876-4c44-97cc-cd1b8df5e7ca
+
 ## なにこれ
 コンピュータネットワークの課題で制作したゲームです。\
 2D版スプラトゥーンみたいなゲームです。
