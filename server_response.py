@@ -11,7 +11,7 @@ class ServerResponse:
     def set_fieldmap(self, map):
         self.map = map
 
-    def set_behavior(self, up, down, left, right):
+    def set_behavior(self, up, left, right, down):
         """
         all direction
         set_behavior(1, 1, 1, 1)
@@ -19,7 +19,7 @@ class ServerResponse:
         upward direction is unavailable
         set_behavior(0, 1, 1, 1)
         """
-        self.behavior = str(up) + str(down) + str(left) + str(right)
+        self.behavior = str(up) + str(left) + str(right) + str(down)
 
     def set_having_item(self, flag):
         self.have_item = flag
