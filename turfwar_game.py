@@ -25,8 +25,11 @@ class TurfWarGame:
     def get_response(self, id):
         res = self.responses[id]
 
-        can_behavior = self.fm.get_can_be_painted_direction(str(id))
-        res.set_behavior(*can_behavior)
+        can_behaviors = []
+        for can in self.fm.get_can_be_painted_direction(str(id)):
+            can_behaviors.append(int(can))
+        
+        res.set_behavior(*can_behaviors)
         res.set_fieldmap(self.get_map())
 
         this_p_turn_is = int(self.which_turn == id)
