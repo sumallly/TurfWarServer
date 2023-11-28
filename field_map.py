@@ -9,15 +9,15 @@ class FieldMap:
     def get_field_type(cls) -> dict:
         return OperateField.get_field_type()
 
-    def __init__(self, fieldtype = None, fieldsize = {'x':31, 'y':21}) -> None:
+    def __init__(self, fieldtype = None, fieldsize = {'x':31, 'y':21}, density = 10) -> None:
         self.position = {}
         self.symbols = {}
         self.userNum = 0
 
         if fieldtype is None:
             fieldtype = 0
-
-        self.operator = OperateField(fieldtype, fieldsize)
+        
+        self.operator = OperateField(fieldtype, fieldsize, density)
         self.d = self.operator.d
 
     def get_map_raw(self) -> list:
@@ -57,6 +57,9 @@ class FieldMap:
     def overwrite_user_symbol(self, ID:str, symbol:str) -> None:
         self.symbols[self.d[ID]] = symbol
 
+    def get_field_size(self):
+        return self.operator.fieldsize
+    
     def get_can_be_painted_direction(self, ID:str):
         return self.operator.can_be_painted(self.position[self.d[ID]])
 
@@ -76,8 +79,8 @@ class FieldMap:
         return self.operator.paint_by_position(self.d[ID], pos, item)
 
     def place_item(self) -> None:
+        # avoid player
         self.operator.place_item()
-
 
     def paint_by_item(self, ID:str, item: ItemTemplate):
         player_position = self.position[self.d[ID]]
@@ -89,10 +92,15 @@ class FieldMap:
                     continue
                 self.operator.paint_by_position(self.d[ID], (i, j), 0)
 
+
 if __name__ == "__main__":
     print(FieldMap.get_field_type())
     sel = int(input())
-    fm = FieldMap(fieldtype=sel, fieldsize={'x':31, 'y':21})
+    print("dencity (def=10)")
+    density = int(input())
+    print("fieldsize : x, y")
+    size = list(map(int, input().split(",")))
+    fm = FieldMap(fieldtype=sel, fieldsize={'x':size[0], 'y':size[1]}, density = density)
     fm.add_player("0", "o")
     fm.add_player("1", "x")
     fm.operator.place_item()
