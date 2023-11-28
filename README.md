@@ -3,8 +3,7 @@
 https://github.com/kaga1minn0nnn4/TurfWarServer/assets/35623953/b8d6f6f1-9876-4c44-97cc-cd1b8df5e7ca
 
 ## なにこれ
-コンピュータネットワークの課題で制作したゲームです。\
-2D版スプラトゥーンみたいなゲームです。
+コンピュータネットワークの課題で制作した2D版スプラトゥーンみたいなゲームです。
 
 ## 起動方法
     git clone https://github.com/kaga1minn0nnn4/TurfWarServer.git
