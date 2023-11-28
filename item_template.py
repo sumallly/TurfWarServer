@@ -16,7 +16,10 @@ class ItemTemplate:
             for j, flag in enumerate(row):
                 if flag == 0:
                     continue
-                mask[i + player_y - 2][j + player_x - 2] = 1
+                try:
+                    mask[i + player_y - 2][j + player_x - 2] = 1
+                except:
+                    continue
 
         return mask
 
@@ -24,8 +27,8 @@ class ItemTemplate:
     def create_random_item(cls):
         random_value = random.random()
 
-        probabilities = [0.4, 0.35, 0.1, 0.1, 0.05]
-        item_types = [ items.HorizontalPaintItem(), items.VerticalPaintItem(), 
+        probabilities = [0.3, 0.25, 0.2, 0.2, 0.05]
+        item_types = [ items.HorizontalPaintItem(), items.VerticalPaintItem(),
                        items.DiagonalCrossPaintItem(), items.CrossPaintItem(),
                        items.SaikyoPaintItem()
                        ]

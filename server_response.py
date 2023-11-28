@@ -5,6 +5,8 @@ class ServerResponse:
         self.field_w = 31
         self.field_h = 21
         self.have_item = 0
+        self.x = -1
+        self.y = -1
 
     def set_fieldmap(self, map):
         self.map = map
@@ -18,10 +20,29 @@ class ServerResponse:
         set_behavior(0, 1, 1, 1)
         """
         self.behavior = str(up) + str(down) + str(left) + str(right)
-        
+
     def set_having_item(self, flag):
         self.have_item = flag
 
+    def set_player_position(self, pos):
+        self.x = pos[1]
+        self.y = pos[0]
+
+
     def get_response(self):
-        response = self.map + "," + self.behavior + "," + str(self.field_w) + "," + str(self.field_h) + "," + str(self.have_item)
+        msgs = [
+            self.map,
+            self.behavior,
+            self.field_w,
+            self.field_h,
+            self.have_item,
+            self.x,
+            self.y
+        ]
+
+        response = msgs[0]
+        for msg in msgs[1:]:
+            response += ","
+            response += str(msg)
+
         return response.encode()
