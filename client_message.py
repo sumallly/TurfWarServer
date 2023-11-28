@@ -4,7 +4,7 @@ class ClientMessage:
 
         self.behavior = split[0]
         self.use_item = int(split[1])
-        self.get_timestamp = split[2]
+        self.timestamp = split[2]
 
     def get_behavior(self):
         print(self.behavior)

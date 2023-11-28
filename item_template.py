@@ -24,8 +24,11 @@ class ItemTemplate:
     def create_random_item(cls):
         random_value = random.random()
 
-        probabilities = [0.5, 0.5]
-        item_types = [ items.HorizontalPaintItem(), items.VerticalPaintItem() ]
+        probabilities = [0.4, 0.35, 0.1, 0.1, 0.05]
+        item_types = [ items.HorizontalPaintItem(), items.VerticalPaintItem(), 
+                       items.DiagonalCrossPaintItem(), items.CrossPaintItem(),
+                       items.SaikyoPaintItem()
+                       ]
 
         item: ItemTemplate = ItemTemplate()
 

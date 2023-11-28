@@ -9,6 +9,10 @@ class TurfWarGame:
         self.fm: FieldMap = FieldMap(3)
         self.fm.add_player("0", "o")
         self.fm.add_player("1", "x")
+        
+        init_item_num = 10
+        for i in range(init_item_num):
+            self.fm.place_item()
 
         self.which_turn = 0
 
@@ -31,9 +35,7 @@ class TurfWarGame:
         
         res.set_behavior(*can_behaviors)
         res.set_fieldmap(self.get_map())
-
-        this_p_turn_is = int(self.which_turn == id)
-        res.set_turn(this_p_turn_is)
+        res.set_having_item(self.player_have_item[id])
 
         return res.get_response()
 
@@ -47,8 +49,8 @@ class TurfWarGame:
 
         status = self.fm.paint_by_direction(str(p_id), move_dir, 0)
 
-        # if use_item and self.player_have_item[p_id]:
-        if use_item:
+        if use_item and self.player_have_item[p_id]:
+        # if use_item:
             # use item
             item = ItemTemplate.create_random_item()
             self.fm.paint_by_item(str(p_id), item)

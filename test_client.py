@@ -22,7 +22,7 @@ while True:
     res_msgs = response.split(",")
     # print(res_msgs)
     display_map(res_msgs[0])
-    print(res_msgs[1])
+    print(res_msgs[1:])
 
     print("input=")
     cli_msg = input() + ","
