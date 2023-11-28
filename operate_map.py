@@ -42,6 +42,7 @@ class OperateField:
                     self.field[y][x] = 1
     
     def __add_obstacle_grid(self):
+        # add density system
         for i, row in enumerate(self.field):
             if i%2 == 0:
                 for i in range(int(len(row)/2)):
