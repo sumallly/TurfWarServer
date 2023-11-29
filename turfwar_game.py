@@ -7,12 +7,14 @@ from item_template import ItemTemplate
 class TurfWarGame:
     def __init__(self) -> None:
         self.fm: FieldMap = FieldMap(3)
-        self.fm.add_player("0", "o")
-        self.fm.add_player("1", "x")
-        
-        init_item_num = 10
+
+        init_item_num = 20
         for i in range(init_item_num):
             self.fm.place_item()
+
+        self.fm.add_player("0", "o")
+        self.fm.add_player("1", "x")
+
 
         self.which_turn = 0
 
@@ -32,10 +34,11 @@ class TurfWarGame:
         can_behaviors = []
         for can in self.fm.get_can_be_painted_direction(str(id)):
             can_behaviors.append(int(can))
-        
+
         res.set_behavior(*can_behaviors)
         res.set_fieldmap(self.get_map())
         res.set_having_item(self.player_have_item[id])
+        res.set_player_position(self.fm.get_user_position(str(id)))
 
         return res.get_response()
 
