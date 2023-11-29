@@ -65,17 +65,21 @@ class FieldMap:
 
     def paint_by_direction(self, ID:str, direction:str, item:int=0) -> int:
         pos = self.position[self.d[ID]]
+        x = y = 0
         if direction == "w":
-            pos[0] -= 1
+            y -= 1
         elif direction == "a":
-            pos[1] -= 1
+            x -= 1
         elif direction == "d":
-            pos[1] += 1
+            x += 1
         elif direction == "s":
-            pos[0] += 1
+            y += 1
         else:
             # invalid direction charactor
             pass
+        if self.operator.field[pos[0]+y][pos[1]+x] != 1:
+            pos[0] += y
+            pos[1] += x
         return self.operator.paint_by_position(self.d[ID], pos, item)
 
     def place_item(self) -> None:

@@ -54,12 +54,23 @@ class OperateField:
             self.field[pos[0]][pos[1]] = 1
         # add obstacle to isolated area
 
-    def __get_random_pos(self, objtype_place):
+    def __get_random_pos(self, objtype_place = None, objtype_avoid = None):
+        if objtype_place == objtype_avoid == None:
+            return None
+        
         if type(objtype_place) == int:
             objtype_place = [objtype_place]
+        elif type(objtype_avoid) == int:
+            objtype_avoid = [objtype_avoid]
+
+        
         pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
-        while not self.field[pos[0]][pos[1]] in objtype_place:
-            pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
+        if objtype_place != None:
+            while not self.field[pos[0]][pos[1]] in objtype_place:
+                pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
+        elif objtype_avoid != None:
+            while self.field[pos[0]][pos[1]] in objtype_avoid:
+                pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
         return pos
 
     def __fill_isolated_area(self) -> None:
@@ -134,9 +145,7 @@ class OperateField:
         return self.__get_random_pos(0)
 
     def place_item(self) -> None:
-        pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
-        while self.field[pos[0]][pos[1]] == 1:
-            pos = [randint(1, self.fieldsize["y"]-1), randint(1, self.fieldsize["x"]-1)]
+        pos = self.__get_random_pos(objtype_place=[0])
         self.field[pos[0]][pos[1]] = 2
 
     def can_be_painted(self, position:list) -> list:
