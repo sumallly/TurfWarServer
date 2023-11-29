@@ -145,7 +145,7 @@ class OperateField:
         return self.__get_random_pos(0)
 
     def place_item(self) -> None:
-        pos = self.__get_random_pos(objtype_avoid=[1, 2])
+        pos = self.__get_random_pos(objtype_place=[0])
         self.field[pos[0]][pos[1]] = 2
 
     def can_be_painted(self, position:list) -> list:
