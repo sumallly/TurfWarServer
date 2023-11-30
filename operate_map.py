@@ -156,7 +156,7 @@ class OperateField:
                 self.field[y][x+1] != self.d["obstacle"],
                 self.field[y+1][x] != self.d["obstacle"]]
 
-    def paint_by_position(self, color:int, position:list, item:int) -> int:
+    def paint_by_position(self, color:int, position:list) -> int:
         y = position[0]
         x = position[1]
         status = 0
@@ -165,10 +165,6 @@ class OperateField:
         else:
             if self.field[y][x] == self.d["item"]:
                 status += 1
-
-            if item:
-                #process by item
-                pass
 
             self.field[y][x] = color
         return status

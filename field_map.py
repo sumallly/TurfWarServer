@@ -42,7 +42,7 @@ class FieldMap:
         self.d[ID] = self.userNum + 11
         self.position[self.d[ID]] = self.operator.get_init_position()
         self.symbols[self.d[ID]] = symbol
-        self.operator.paint_by_position(self.d[ID], self.position[self.d[ID]], 0)
+        self.operator.paint_by_position(self.d[ID], self.position[self.d[ID]])
         self.userNum += 1
 
     def get_user_position(self, ID:str) -> list:
@@ -63,7 +63,7 @@ class FieldMap:
     def get_can_be_painted_direction(self, ID:str):
         return self.operator.can_be_painted(self.position[self.d[ID]])
 
-    def paint_by_direction(self, ID:str, direction:str, item:int=0) -> int:
+    def paint_by_direction(self, ID:str, direction:str) -> int:
         pos = self.position[self.d[ID]]
         x = y = 0
         if direction == "w":
@@ -80,7 +80,7 @@ class FieldMap:
         if self.operator.field[pos[0]+y][pos[1]+x] != 1:
             pos[0] += y
             pos[1] += x
-        return self.operator.paint_by_position(self.d[ID], pos, item)
+        return self.operator.paint_by_position(self.d[ID], pos)
 
     def place_item(self) -> None:
         # avoid player
@@ -94,7 +94,7 @@ class FieldMap:
             for j, flag in enumerate(row):
                 if flag == 0:
                     continue
-                self.operator.paint_by_position(self.d[ID], (i, j), 0)
+                self.operator.paint_by_position(self.d[ID], (i, j))
 
 
 if __name__ == "__main__":

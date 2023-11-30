@@ -50,7 +50,7 @@ class TurfWarGame:
         move_dir = msg.get_behavior()
         use_item = msg.get_use_item_flag()
 
-        status = self.fm.paint_by_direction(str(p_id), move_dir, 0)
+        status = self.fm.paint_by_direction(str(p_id), move_dir)
 
         if use_item and self.player_have_item[p_id]:
         # if use_item:
