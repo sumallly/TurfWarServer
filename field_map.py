@@ -38,10 +38,10 @@ class FieldMap:
                 fieldstr += ' '
         return fieldstr
 
-    def add_player(self, ID:str, mark:str) -> None:
+    def add_player(self, ID:str, symbol:str) -> None:
         self.d[ID] = self.userNum + 11
         self.position[self.d[ID]] = self.operator.get_init_position()
-        self.symbols[self.d[ID]] = mark
+        self.symbols[self.d[ID]] = symbol
         self.operator.paint_by_position(self.d[ID], self.position[self.d[ID]], 0)
         self.userNum += 1
 
