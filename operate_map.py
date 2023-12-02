@@ -2,6 +2,7 @@ from cmath import pi
 from random import randint
 import random
 import copy
+from time import time
 
 
 class OperateField:
@@ -54,23 +55,38 @@ class OperateField:
             self.field[pos[0]][pos[1]] = 1
         # add obstacle to isolated area
 
-    def __get_random_pos(self, objtype_place = None, objtype_avoid = None):
+    def __get_random_pos(self, objtype_place = None, objtype_avoid = None, area_place = None):
+        process_start = time()
+        process_limit_time = 10
+
         if objtype_place == objtype_avoid == None:
+            return None
+        # area_place where the positions should be placed
+        if type(area_place) == None:
+            area_place = [[0, self.fieldsize["y"]], [0, self.fieldsize["x"]]]
+        elif area_place[0][0] >= area_place[0][1]:
             return None
         
         if type(objtype_place) == int:
             objtype_place = [objtype_place]
         elif type(objtype_avoid) == int:
             objtype_avoid = [objtype_avoid]
-
         
         pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
         if objtype_place != None:
-            while not self.field[pos[0]][pos[1]] in objtype_place:
+            while not self.field[pos[0]][pos[1]] in objtype_place and\
+                    not area_place[0][0] <= pos[0] < area_place[0][1] and\
+                    not area_place[1][0] <= pos[1] < area_place[1][1]:
                 pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
+                if time() - process_start > process_limit_time:
+                    return None
         elif objtype_avoid != None:
-            while self.field[pos[0]][pos[1]] in objtype_avoid:
+            while self.field[pos[0]][pos[1]] in objtype_avoid and\
+                    not area_place[0][0] <= pos[0] < area_place[0][1] and\
+                    not area_place[1][0] <= pos[1] < area_place[1][1]:
                 pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
+                if time() - process_start > process_limit_time:
+                    return None
         return pos
 
     def __fill_isolated_area(self) -> None:
