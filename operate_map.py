@@ -55,17 +55,15 @@ class OperateField:
             self.field[pos[0]][pos[1]] = 1
         # add obstacle to isolated area
 
-    def __get_random_pos(self, objtype_place = None, objtype_avoid = None, area_place = None):
+    def __get_random_pos(self, objtype_place = None, objtype_avoid = None, positions_place = None):
         process_start = time()
         process_limit_time = 10
 
         if objtype_place == objtype_avoid == None:
             return None
         # area_place where the positions should be placed
-        if type(area_place) == None:
-            area_place = [[0, self.fieldsize["y"]], [0, self.fieldsize["x"]]]
-        elif area_place[0][0] >= area_place[0][1]:
-            return None
+        if type(positions_place) == None:
+            positions_place = self.__conv_area_to_positions([[0, self.fieldsize['y']], [0, self.fieldsize['x']]])
         
         if type(objtype_place) == int:
             objtype_place = [objtype_place]
@@ -75,19 +73,24 @@ class OperateField:
         pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
         if objtype_place != None:
             while not self.field[pos[0]][pos[1]] in objtype_place and\
-                    not area_place[0][0] <= pos[0] < area_place[0][1] and\
-                    not area_place[1][0] <= pos[1] < area_place[1][1]:
+                    not pos in positions_place:
                 pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
                 if time() - process_start > process_limit_time:
                     return None
         elif objtype_avoid != None:
             while self.field[pos[0]][pos[1]] in objtype_avoid and\
-                    not area_place[0][0] <= pos[0] < area_place[0][1] and\
-                    not area_place[1][0] <= pos[1] < area_place[1][1]:
+                    not pos in positions_place:
                 pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
                 if time() - process_start > process_limit_time:
                     return None
         return pos
+    
+    def __conv_area_to_positions(self, area:list):
+        positions = []
+        for i in range(area[0][0], area[0][1]):
+            for j in range(area[1][0], area[1][1]):
+                positions.append([i, j])
+        return positions
 
     def __fill_isolated_area(self) -> None:
         checkfield = copy.deepcopy(self.field)
