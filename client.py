@@ -18,8 +18,15 @@ def display_map(raw, x, y):
 
         print()
         
-def count_area(raw, x, y):
-    return 1, 0
+def count_area(raw, x, y):    
+    fieldsize={'x':31, 'y':21}
+    my_block = raw[y*fieldsize["x"]*2+x*2]
+    opponent_block = "o" if my_block == "x" else "x"
+    
+    my_area = raw.count(my_block)
+    opponent_area = raw.count(opponent_block)
+
+    return my_area, opponent_area
         
 def display_result(raw_map, x, y):
     print("End of game!!!")
