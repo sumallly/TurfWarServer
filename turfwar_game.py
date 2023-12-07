@@ -25,7 +25,7 @@ class TurfWarGame:
 
         self.player_have_item = [0, 0]
         
-        self.turm_limit = 50
+        self.turn_limit = 6
 
     def get_map(self):
         return self.fm.get_map_sendable()
@@ -52,7 +52,7 @@ class TurfWarGame:
         self.num_of_res += 1
 
         msg = ClientMessage(message)
-        if msg.get_closeflag:
+        if msg.get_closeflag():
             return False
 
         move_dir = msg.get_behavior()

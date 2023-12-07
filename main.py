@@ -29,10 +29,10 @@ def callback_accept(client, addr):
             print(f"Server -> Client(id={session_id}, p={player_num})")
 
             # Client -> Server
-            client_res_msg =  client.recv(256)
-            
+            client_res_msg =  client.recv(256)            
+            print(f"Client(id={session_id}, p={player_num}) -> Server")     
             if game.step(player_num, client_res_msg):
-                print(f"Client(id={session_id}, p={player_num}) -> Server")
+                
                 game.wait_other_player()
             else :
                 print(f"This game is closed. id: ({session_id})")

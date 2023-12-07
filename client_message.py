@@ -5,7 +5,7 @@ class ClientMessage:
         self.behavior = split[0]
         self.use_item = int(split[1])
         self.timestamp = split[2]
-        self.client_is_close = bool(split[3])
+        self.client_is_close = bool(int(split[3]))
 
     def get_behavior(self):
         return self.behavior

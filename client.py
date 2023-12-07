@@ -1,30 +1,40 @@
 import socket
 
-my_block = ""
-
 def display_map(raw, x, y):
     fieldsize={'x':31, 'y':21}
     for i in range(fieldsize["y"]):
         for j in range(fieldsize["x"] * 2):
-            block_raw = raw[i*fieldsize["x"]*2+j]
+            block = raw[i*fieldsize["x"]*2+j]
             
-            block = ""
-            if block_raw == "o":
-                block = "\033[31m" + block_raw + "\033[0m"
-            if block_raw == "x":
-                block = "\033[32m" + block_raw + "\033[0m"
+            if block == "o":
+                block = "\033[31m" + block + "\033[0m"
+            if block == "x":
+                block = "\033[32m" + block + "\033[0m"
 
             if j == x * 2 and i == y:
-                my_block = block_raw
                 block = "\033[7m" + block
 
             print(block, end="")
 
         print()
         
-def display_result():
-    pass
-
+def count_area(raw, x, y):
+    return 1, 0
+        
+def display_result(raw_map, x, y):
+    print("End of game!!!")
+    my_area, opponent_area = count_area(raw_map, x, y)
+    
+    print("Game result ...")
+    print(f"Your painted area: {my_area}")
+    print(f"Opponent player painted area: {opponent_area}")
+    print()
+    if my_area > opponent_area:
+        print("!!!!! YOU WIN !!!!!")
+    elif my_area == opponent_area:
+        print("DRAW")
+    else:
+        print("..... YOU LOSE .....")
 
 if __name__ == "__main__":
     target_ip = "127.0.0.1"
@@ -45,12 +55,11 @@ if __name__ == "__main__":
         player_x = int(res_msgs[5])
         player_y = int(res_msgs[6])
         
-        is_end = res_msgs[7]
+        is_end = int(res_msgs[7])
         if is_end:
-            print("End of game!!!")    
             cli_msg = "0,0,0,1"
             tcp_client.send(cli_msg.encode())
-            display_result()
+            display_result(map_raw, player_x, player_y)
             break
 
         display_map(map_raw, player_x, player_y)
@@ -85,6 +94,8 @@ if __name__ == "__main__":
             cli_msg += flag + ","
         else:
             cli_msg += "0" + ","
-        cli_msg += "0"
+        cli_msg += "0,0"
 
         tcp_client.send(cli_msg.encode())
+
+    tcp_client.close()
