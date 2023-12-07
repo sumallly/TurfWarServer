@@ -29,6 +29,8 @@ def count_area(raw, x, y):
     return my_area, opponent_area
         
 def display_result(raw_map, x, y):
+    print()
+    print()
     print("End of game!!!")
     my_area, opponent_area = count_area(raw_map, x, y)
     
