@@ -41,13 +41,19 @@ class TurfWarGame:
         res.set_fieldmap(self.get_map())
         res.set_having_item(self.player_have_item[id])
         res.set_player_position(self.fm.get_user_position(str(id)))
+        
+        if self.turn > self.turn_limit:
+            # game end
+            res.set_endflag()
 
         return res.get_response()
 
-    def step(self, p_id, message):
+    def step(self, p_id, message):        
         self.num_of_res += 1
 
         msg = ClientMessage(message)
+        if msg.get_closeflag:
+            return False
 
         move_dir = msg.get_behavior()
         use_item = msg.get_use_item_flag()
@@ -64,6 +70,8 @@ class TurfWarGame:
         if status == 1:
             # get item
             self.player_have_item[p_id] = 1
+            
+        return True
 
     def wait_other_player(self):
         while self.num_of_res != self.turn:

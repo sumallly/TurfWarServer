@@ -7,6 +7,7 @@ class ServerResponse:
         self.have_item = 0
         self.x = -1
         self.y = -1
+        self.is_end = False
 
     def set_fieldmap(self, map):
         self.map = map
@@ -27,7 +28,9 @@ class ServerResponse:
     def set_player_position(self, pos):
         self.x = pos[1]
         self.y = pos[0]
-
+        
+    def set_endflag(self):
+        self.is_end = True
 
     def get_response(self):
         msgs = [
