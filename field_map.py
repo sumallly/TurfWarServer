@@ -95,14 +95,6 @@ class FieldMap:
                 if flag == 0:
                     continue
                 self.operator.paint_by_position(self.d[ID], (i, j), 0)
-                
-    def count_area(self, ID: str):
-        player_no = self.d[ID]
-        area = 0
-        for row in self.operator.field:
-            area += row.count(player_no)
-        return area
-
 
 if __name__ == "__main__":
     print(FieldMap.get_field_type())
