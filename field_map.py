@@ -96,7 +96,6 @@ class FieldMap:
                     continue
                 self.operator.paint_by_position(self.d[ID], (i, j))
 
-
 if __name__ == "__main__":
     print(FieldMap.get_field_type())
     sel = int(input())

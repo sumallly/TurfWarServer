@@ -29,15 +29,21 @@ def callback_accept(client, addr):
             print(f"Server -> Client(id={session_id}, p={player_num})")
 
             # Client -> Server
-            client_res_msg =  client.recv(256)
-            game.step(player_num, client_res_msg)
-            print(f"Client(id={session_id}, p={player_num}) -> Server")
-
+            client_res_msg =  client.recv(256)            
+            print(f"Client(id={session_id}, p={player_num}) -> Server")     
+            is_close = not game.step(player_num, client_res_msg)
             game.wait_other_player()
-
+            
+            if is_close:
+                print(f"This game is closed. id: ({session_id})")
+                break
+                
     except BrokenPipeError:
-        print(f"close id({session_id})")
-        gs.remove_from_id(session_id)
+        print(f"Broken pipe id: ({session_id})")
+        # gs.remove_from_id(session_id)
+    
+    finally:
+        print(f"Close client id: ({session_id})")
         client.close()
 
 

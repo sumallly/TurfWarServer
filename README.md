@@ -15,10 +15,10 @@ https://github.com/kaga1minn0nnn4/TurfWarServer/assets/35623953/b8d6f6f1-9876-4c
     # クライアント起動
     python3 client.py
 
-    # AIクライアント起動
+    # NPCクライアント起動
     python3 client_ai.py
 
-一人で遊びたい人はclient.pyとclient_ai.pyを立ち上げると、AI(全然強くない)と対戦できます。
+一人で遊びたい人はclient.pyとclient_ai.pyを立ち上げると、NPC(全然強くない)と対戦できます。
 
 ## ルール
 プレイヤーはランダムで生成されたマップ内を動き回りながら、マップ内を塗りつぶして行きます。\
