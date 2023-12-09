@@ -100,7 +100,8 @@ if __name__ == "__main__":
     print(FieldMap.get_field_type())
     sel = int(input())
     print("dencity (def=10)")
-    density = int(input())
+    densityInput = input()
+    density =  10 if densityInput == '' else int(densityInput)
     print("fieldsize : x, y")
     size = list(map(int, input().split(",")))
     fm = FieldMap(fieldtype=sel, fieldsize={'x':size[0], 'y':size[1]}, density = density)
@@ -108,7 +109,7 @@ if __name__ == "__main__":
     fm.add_player("1", "x")
     fm.operator.place_item()
 
-    fm.paint_by_item("0", VerticalPaintItem())
+    #fm.paint_by_item("0", VerticalPaintItem())
 
     s = fm.get_map_sendable()
     fieldsize = fm.get_field_size()

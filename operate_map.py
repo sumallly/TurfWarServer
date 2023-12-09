@@ -58,11 +58,11 @@ class OperateField:
     def __get_random_pos(self, objtype_place = None, objtype_avoid = None, positions_place = None):
         process_start = time()
         process_limit_time = 10
-
+        #random.seed(process_start*1000)
         if objtype_place == objtype_avoid == None:
             return None
         # area_place where the positions should be placed
-        if type(positions_place) == None:
+        if positions_place == None:
             positions_place = self.__conv_area_to_positions([[0, self.fieldsize['y']], [0, self.fieldsize['x']]])
         
         if type(objtype_place) == int:
@@ -176,8 +176,8 @@ class OperateField:
                 self.field[y+1][x] != self.d["obstacle"]]
 
     def paint_by_position(self, color:int, position:list) -> int:
-        y = position[0]
-        x = position[1]
+        y = min(self.fieldsize['y']-1, max(0, position[0]))
+        x = min(self.fieldsize['x']-1, max(0, position[1]))
         status = 0
         if self.field[y][x] == self.d["obstacle"]:
             status =  -1
