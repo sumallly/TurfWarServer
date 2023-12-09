@@ -42,6 +42,7 @@ class FieldMap:
         self.d[ID] = self.userNum + 11
         self.position[self.d[ID]] = self.operator.get_init_position()
         self.symbols[self.d[ID]] = symbol
+        print(symbol, self.position[self.d[ID]])
         self.operator.paint_by_position(self.d[ID], self.position[self.d[ID]])
         self.userNum += 1
 
@@ -98,15 +99,18 @@ class FieldMap:
 
 if __name__ == "__main__":
     print(FieldMap.get_field_type())
-    sel = int(input())
+    sel = 3 #int(input())
     print("dencity (def=10)")
-    densityInput = input()
-    density =  10 if densityInput == '' else int(densityInput)
+    densityInput = 10 #input()
+    density =  10 #if densityInput == '' else int(densityInput)
     print("fieldsize : x, y")
-    size = list(map(int, input().split(",")))
+    size = [21, 11] #list(map(int, input().split(",")))
     fm = FieldMap(fieldtype=sel, fieldsize={'x':size[0], 'y':size[1]}, density = density)
+    gens = fm.get_map_sendable()
     fm.add_player("0", "o")
+    gen1 = fm.get_map_sendable()
     fm.add_player("1", "x")
+    gen2 = fm.get_map_sendable()
     fm.operator.place_item()
 
     #fm.paint_by_item("0", VerticalPaintItem())
@@ -114,4 +118,4 @@ if __name__ == "__main__":
     s = fm.get_map_sendable()
     fieldsize = fm.get_field_size()
     for i in range(fieldsize["y"]):
-        print(s[2*i*fieldsize["x"] : 2*(i+1)*fieldsize["x"]])
+        print(gens[2*i*fieldsize["x"] : 2*(i+1)*fieldsize["x"]], gen1[2*i*fieldsize["x"] : 2*(i+1)*fieldsize["x"]], gen2[2*i*fieldsize["x"] : 2*(i+1)*fieldsize["x"]], s[2*i*fieldsize["x"] : 2*(i+1)*fieldsize["x"]])
