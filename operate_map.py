@@ -72,13 +72,13 @@ class OperateField:
         
         pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
         if objtype_place != None:
-            while not self.field[pos[0]][pos[1]] in objtype_place and\
+            while not self.field[pos[0]][pos[1]] in objtype_place or\
                     not pos in positions_place:
                 pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
                 if time() - process_start > process_limit_time:
                     return None
         elif objtype_avoid != None:
-            while self.field[pos[0]][pos[1]] in objtype_avoid and\
+            while self.field[pos[0]][pos[1]] in objtype_avoid or\
                     not pos in positions_place:
                 pos = [randint(1, self.fieldsize["y"]-2), randint(1, self.fieldsize["x"]-2)]
                 if time() - process_start > process_limit_time:
